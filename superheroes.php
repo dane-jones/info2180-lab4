@@ -63,10 +63,28 @@ $superheroes = [
   ], 
 ];
 
+$message="";
+
+$query= filter_input(INPUT_GET, "query", FILTER_SANITIZE_STRING);
+
+if (strlen($query)>0){
+    $message="<font color='red'><h3>SUPERHERO NOT FOUND.</h3>";
+    foreach ($superheroes as $superhero){ 
+        if ($superhero['alias'] === $query || strtoupper($superhero['alias']) === $query || strtolower($superhero['alias']) === $query || $superhero['name'] === $query || strtolower($superhero['name']) === $query || strtoupper($superhero['name']) === $query){
+            $message = "<h3>".strtoupper($superhero["alias"])."</h3>";
+            $message .= "<h4>"."A.K.A ".strtoupper($superhero["name"])."</h4>";
+            $message .= "<p>".$superhero["biography"]."</p>";
+        }
+    }    
+} =
+
+echo $message;
 ?>
 
+<?php if($query===""):?>
 <ul>
 <?php foreach ($superheroes as $superhero): ?>
   <li><?= $superhero['alias']; ?></li>
 <?php endforeach; ?>
 </ul>
+<?php endif;?>
